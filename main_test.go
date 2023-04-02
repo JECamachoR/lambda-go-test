@@ -1,20 +1,25 @@
 package main
 
 import (
+	"testing"
+
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestHandler(t *testing.T) {
 
-	request := events.APIGatewayProxyRequest{}
+	request := events.APIGatewayProxyRequest{
+		QueryStringParameters: map[string]string{
+			"name": "world",
+		},
+	}
 	expectedResponse := events.APIGatewayProxyResponse{
 		StatusCode: 200,
 		Headers: map[string]string{
 			"Content-Type": "text/html",
 		},
-		Body: "Congratulations",
+		Body: "Hello, world",
 	}
 
 	response, err := Handler(request)
