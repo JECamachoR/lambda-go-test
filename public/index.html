@@ -1,17 +1,18 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <head>
     <title>My First Serverless App</title>
 </head>
     <body>
         <h1>My First Serverless App</h1>
-        {{if .name}}
-        <p>Hello, {{.name}}</p>
-        {{else}}
-        <p>Enter your name:</p>
+        {{if .USD}}
+        <p>You can buy {{.BTC}} for ${{.USD}}</p>
         {{end}}
+        <p>Enter the amount of dollars to convert to bitcoin:</p>
         <form method="GET">
-            <input type="text" name="name" />
+            <input type="text" name="name"
+            pattern="[0-9]*" inputmode="numeric"
+            />
             <input type="submit" value="Submit" />
         </form>
     </body>

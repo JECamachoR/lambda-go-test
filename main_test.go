@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -9,23 +10,19 @@ import (
 
 func TestHandler(t *testing.T) {
 
-	request := events.APIGatewayProxyRequest{
-		QueryStringParameters: map[string]string{
-			"name": "world",
-		},
-	}
-	expectedResponse := events.APIGatewayProxyResponse{
-		StatusCode: 200,
-		Headers: map[string]string{
-			"Content-Type": "text/html",
-		},
-		Body: "Hello, world",
-	}
+	request := events.APIGatewayProxyRequest{}
 
 	response, err := Handler(request)
 
-	assert.Equal(t, response.Headers, expectedResponse.Headers)
-	assert.Contains(t, response.Body, expectedResponse.Body)
+	fmt.Println(response)
+
+	assert.Equal(t, response.Headers, map[string]string{
+		"Content-Type": "text/html",
+	})
 	assert.Equal(t, err, nil)
+
+	assert.NotContains(t, response.Body, "You can buy")
+
+	assert.Contains(t, response.Body, "Enter the amount of dollars to convert to bitcoin")
 
 }
