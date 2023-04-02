@@ -1,31 +1,29 @@
 package main
 
 import (
-	"io/ioutil"
+    "fmt"
+    "net/http"
 
-	"github.com/aws/aws-lambda-go/events"
-	"github.com/aws/aws-lambda-go/lambda"
+    "github.com/aws/aws-lambda-go/events"
+    "github.com/aws/aws-lambda-go/lambda"
 )
 
-// Handler is executed by AWS Lambda in the main function. Once the request
-// is processed, it returns an Amazon API Gateway response object to AWS Lambda
-func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-
-	index, err := ioutil.ReadFile("public/index.html")
-	if err != nil {
-		return events.APIGatewayProxyResponse{}, err
-	}
-
-	return events.APIGatewayProxyResponse{
-		StatusCode: 200,
-		Body:       string(index),
-		Headers: map[string]string{
-			"Content-Type": "text/html",
-		},
-	}, nil
-
+func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+    name := request.QueryStringParameters["name"]
+    if name == "" {
+        return events.APIGatewayProxyResponse{
+            StatusCode: http.StatusOK,
+            Body:       "<html><body><form><label>Enter your name:</label><input type=\"text\" name=\"name\"><input type=\"submit\" value=\"Submit\"></form></body></html>",
+        }, nil
+    } else {
+        message := fmt.Sprintf("<html><body><h1>Hello, %s!</h1><form><label>Enter your name:</label><input type=\"text\" name=\"name\" value=\"%s\"><input type=\"submit\" value=\"Submit\"></form></body></html>", name, name)
+        return events.APIGatewayProxyResponse{
+            StatusCode: http.StatusOK,
+            Body:       message,
+        }, nil
+    }
 }
 
 func main() {
-	lambda.Start(Handler)
+    lambda.Start(handler)
 }
