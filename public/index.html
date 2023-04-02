@@ -6,7 +6,7 @@
     <body>
         <h1>My First Serverless App</h1>
         {{if .USD}}
-        <p>You can buy {{printf "%.6f" .BTC}} BTC for ${{printf "%.2f" .USD}} USD</p>
+        <p>You can buy {{printf "%.8f" .BTC}} BTC for ${{printf "%.2f" .USD}} USD</p>
         {{end}}
         <p>Enter the amount of dollars to convert to bitcoin:</p>
         <form method="GET">
