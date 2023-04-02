@@ -10,9 +10,7 @@
         {{end}}
         <p>Enter the amount of dollars to convert to bitcoin:</p>
         <form method="GET">
-            <input type="text" name="name"
-            pattern="[0-9]*" inputmode="numeric"
-            />
+            <input type="text" name="USD" pattern="[0-9]*[.,]?[0-9]*" inputmode="decimal" />
             <input type="submit" value="Submit" />
         </form>
     </body>
