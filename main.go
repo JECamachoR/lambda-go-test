@@ -8,7 +8,7 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
-
+// Handler is our lambda handler invoked by the `lambda.Start` function call
 func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
     var buf bytes.Buffer
 
